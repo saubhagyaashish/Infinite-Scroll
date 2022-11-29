@@ -9,6 +9,7 @@ const count = 30;
 const apiKey = "uDesHYtQkm8W4NcfVX8fWVgrCfnc8amruIHNx_U5yOk";
 const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`;
 
+loader.hidden = false;
 // Get photos
 const getPhotos = async () => {
   try {
@@ -50,6 +51,7 @@ const displayPhoto = () => {
 //adding a load event
 const imgloaded=()=>{
   if(imgCount<=30) {
+    loader.hidden =true;
     imgCount++
   };
 
@@ -63,7 +65,8 @@ window.addEventListener("scroll", () => {
   {
     getPhotos()
     imgCount =0;
+    loader.hidden =false;
   }
 });
 
-//getPhotos()
+getPhotos()
