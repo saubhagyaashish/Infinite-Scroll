@@ -2,6 +2,7 @@
 let imgContainer = document.getElementById("img-container");
 let loader = document.getElementById("loader");
 let photosArray = [];
+let imgCount =0;
 
 // Api Variable Declaration
 const count = 30;
@@ -24,6 +25,7 @@ const setAttributes = (item, attribute) => {
     item.setAttribute(key, attribute[key]);
   }
 };
+
 const displayPhoto = () => {
   photosArray.forEach((photo) => {
     const anchor = document.createElement("a");
@@ -35,10 +37,33 @@ const displayPhoto = () => {
     setAttributes(img, {
       src: photo.urls.regular,
       alt: photo.alt_description,
+      title: photo.alt_description,
     });
-    anchor.appendChild(img)
-    imgContainer.appendChild(anchor)
+    img.addEventListener('load',imgloaded)
+
+    anchor.appendChild(img);
+    imgContainer.appendChild(anchor);
+    
   });
 };
 
-getPhotos()
+//adding a load event
+const imgloaded=()=>{
+  if(imgCount<=30) {
+    imgCount++
+  };
+
+  
+}
+
+//checking bottom of the page using scroll event
+window.addEventListener("scroll", () => {
+
+  if(imgCount===30 && ((innerHeight+scrollY) >=document.body.offsetHeight - 1000))
+  {
+    getPhotos()
+    imgCount =0;
+  }
+});
+
+//getPhotos()
